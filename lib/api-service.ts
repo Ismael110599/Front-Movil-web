@@ -38,6 +38,10 @@ export const apiService = {
     return httpClient.post<ApiResponse>(API_CONFIG.ENDPOINTS.VERIFY_EMAIL, { correo, codigo })
   },
 
+  getDocentes(): Promise<ApiResponse<any[]>> {
+    return httpClient.get<ApiResponse<any[]>>(API_CONFIG.ENDPOINTS.LIST_DOCENTES)
+  },
+
   createEvent(eventData: {
     titulo: string
     ubicacion: {
