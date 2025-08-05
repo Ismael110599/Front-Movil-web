@@ -29,6 +29,16 @@ Continue building your app on:
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
 
+## Environment
+
+Configure the API base URL through the `NEXT_PUBLIC_API_URL` environment
+variable so the dashboard can display live data from the backend:
+
+```bash
+# .env.local
+NEXT_PUBLIC_API_URL=http://localhost:80
+```
+
 ## API Endpoints
 
 The project consumes a REST API whose endpoints are documented in
@@ -42,7 +52,7 @@ below shows how each endpoint is used inside the application:
 | `/api/eventos/listar` | `getEvents` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/eventos/finalizar` | `finalizeEvent` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/asistencia/registrar` | `registerAttendance` | _Attendance registration (future pages)_ |
-| `/api/dashboard/datos` | `getDashboardData` | `hooks/use-websocket.ts` → `<EnhancedDashboard />` |
+| `/api/dashboard/datos` | `getDashboardData` | `hooks/use-dashboard-data.ts` → `<EnhancedDashboard />` |
 | `/api/justificaciones/crear` | `createJustification` | _Justification creation (future pages)_ |
 
 These mappings make it easier to locate where each API call is triggered in

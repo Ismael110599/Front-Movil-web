@@ -1,13 +1,13 @@
 "use client"
 
-import { useWebSocket } from "@/hooks/use-websocket"
+import { useDashboardData } from "@/hooks/use-dashboard-data"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { BarChart3, Users, Calendar, TrendingUp, Download, Wifi, WifiOff } from "lucide-react"
 
 export function DashboardContent() {
-  const { stats, isConnected } = useWebSocket()
+  const { stats, isConnected } = useDashboardData()
 
   const handleExportPDF = () => {
     // Simular exportación PDF

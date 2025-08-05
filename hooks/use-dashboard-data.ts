@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { apiService } from "@/lib/api-service"
 import type { AttendanceStats } from "@/types"
 
-export function useWebSocket() {
+export function useDashboardData() {
   const [stats, setStats] = useState<AttendanceStats>({
     totalEvents: 0,
     activeEvents: 0,
