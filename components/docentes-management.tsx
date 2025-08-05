@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { CreateDocenteModal } from "./create-docente-modal"
+import { VerifyDocenteModal } from "./verify-docente-modal"
+import { apiService } from "@/lib/api-service"
 import {
   Plus,
   Search,
@@ -24,53 +26,49 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import type { Docente } from "@/types"
 
-const mockDocentes: Docente[] = [
-  {
-    id: "1",
-    name: "Dr. María García",
-    email: "maria.garcia@universidad.edu",
-    createdAt: "2024-01-15",
-    verified: true,
-    eventsAssigned: 5,
-  },
-  {
-    id: "2",
-    name: "Prof. Carlos López",
-    email: "carlos.lopez@universidad.edu",
-    createdAt: "2024-01-20",
-    verified: true,
-    eventsAssigned: 3,
-  },
-  {
-    id: "3",
-    name: "Dra. Ana Martínez",
-    email: "ana.martinez@universidad.edu",
-    createdAt: "2024-01-25",
-    verified: false,
-    eventsAssigned: 0,
-  },
-  {
-    id: "4",
-    name: "Prof. Roberto Silva",
-    email: "roberto.silva@universidad.edu",
-    createdAt: "2024-01-28",
-    verified: true,
-    eventsAssigned: 7,
-  },
-  {
-    id: "5",
-    name: "Dra. Carmen Ruiz",
-    email: "carmen.ruiz@universidad.edu",
-    createdAt: "2024-02-01",
-    verified: false,
-    eventsAssigned: 0,
-  },
-]
-
 export function DocentesManagement() {
-  const [docentes, setDocentes] = useState<Docente[]>(mockDocentes)
+  const [docentes, setDocentes] = useState<Docente[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [showCreateModal, setShowCreateModal] = useState(false)
+  const [docenteToVerify, setDocenteToVerify] = useState<Docente | null>(null)
+  const [showVerifyModal, setShowVerifyModal] = useState(false)
+
+  useEffect(() => {
+    const fetchDocentes = async () => {
+      try {
+        const response = await apiService.getDocentes()
+        if (response.success && response.data) {
+          const mapped = response.data.map((d: any) => ({
+            id: d.id || d._id,
+            name: d.nombre || d.name,
+            email: d.correo || d.email,
+            createdAt: d.createdAt || d.fechaCreacion || new Date().toISOString(),
+            verified: d.verificado ?? d.verified ?? false,
+            eventsAssigned: d.eventosAsignados ?? d.eventsAssigned ?? 0,
+          }))
+          setDocentes(mapped)
+        }
+      } catch (error) {
+        console.error("Error fetching docentes:", error)
+      }
+    }
+    fetchDocentes()
+  }, [])
+
+  const handleVerifyModalChange = (open: boolean) => {
+    setShowVerifyModal(open)
+    if (!open) setDocenteToVerify(null)
+  }
+
+  const handleVerifySuccess = (id: string) => {
+    setDocentes((prev) => prev.map((d) => (d.id === id ? { ...d, verified: true } : d)))
+    handleVerifyModalChange(false)
+  }
+
+  const handleVerifyClick = (docente: Docente) => {
+    setDocenteToVerify(docente)
+    setShowVerifyModal(true)
+  }
 
   const filteredDocentes = docentes.filter(
     (docente) =>
@@ -263,7 +261,12 @@ export function DocentesManagement() {
                 <TableCell className="hidden md:table-cell text-gray-500">
                   {new Date(docente.createdAt).toLocaleDateString()}
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right space-x-2">
+                  {!docente.verified && (
+                    <Button variant="outline" size="sm" onClick={() => handleVerifyClick(docente)} className="bg-transparent">
+                      Verificar correo
+                    </Button>
+                  )}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="h-8 w-8 p-0">
@@ -301,6 +304,12 @@ export function DocentesManagement() {
       </div>
 
       <CreateDocenteModal open={showCreateModal} onOpenChange={setShowCreateModal} onSuccess={handleCreateSuccess} />
+      <VerifyDocenteModal
+        docente={docenteToVerify}
+        open={showVerifyModal}
+        onOpenChange={handleVerifyModalChange}
+        onVerified={handleVerifySuccess}
+      />
     </div>
   )
 }
