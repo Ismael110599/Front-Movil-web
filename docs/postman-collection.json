@@ -1,0 +1,337 @@
+{
+"info": {
+"_postman_id": "28f082c0-9779-4038-b386-d350d26ede08",
+"name": "Proyecto Movil",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+"_exporter_id": "36929089",
+"_collection_link": "https://bomberos-el-pangui.postman.co/workspace/My-Workspace~8106d375-436c-426d-88e3-c7d7f64f9901/collection/36929089-28f082c0-9779-4038-b386-d350d26ede08?action=share&source=collection_link&creator=36929089"
+},
+"item": [
+{
+"name": "Usuarios",
+"item": [
+{
+"name": "New Request",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "Login",
+"request": {
+"method": "POST",
+"header": [],
+"body": {
+"mode": "raw",
+"raw": "{\r\n  \"correo\": \"ricardo@example.com\",\r\n  \"contrasena\": \"123456789\"\r\n}\r\n",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+},
+"url": {
+"raw": "http://54.210.246.199:80/api/usuarios/login",
+"protocol": "http",
+"host": [
+"54",
+"210",
+"246",
+"199"
+],
+"port": "80",
+"path": [
+"api",
+"usuarios",
+"login"
+]
+}
+},
+"response": []
+},
+{
+"name": "Registrar",
+"request": {
+"method": "POST",
+"header": [],
+"body": {
+"mode": "raw",
+"raw": "{\r\n  \"nombre\": \"Ricardo Rios\",\r\n  \"correo\": \"ricardo@example.com\",\r\n  \"contrasena\": \"123456789\",\r\n  \"rol\": \"admin\"\r\n}\r\n",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+},
+"url": {
+"raw": "http://localhost:80/api/usuarios/registrar",
+"protocol": "http",
+"host": [
+"localhost"
+],
+"port": "80",
+"path": [
+"api",
+"usuarios",
+"registrar"
+]
+}
+},
+"response": []
+},
+{
+"name": "VerificarCorreo",
+"event": [
+{
+"listen": "test",
+"script": {
+"exec": [
+""
+],
+"type": "text/javascript",
+"packages": {}
+}
+}
+],
+"request": {
+"method": "POST",
+"header": [],
+"body": {
+"mode": "raw",
+"raw": "{\r\n  \"correo\": \"castroismael571@gmail.com\",\r\n  \"codigo\": \"\"\r\n}\r\n",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+},
+"url": {
+"raw": "http://localhost:80/api/usuarios/verificar-correo",
+"protocol": "http",
+"host": [
+"localhost"
+],
+"port": "80",
+"path": [
+"api",
+"usuarios",
+"verificar-correo"
+]
+}
+},
+  "response": []
+  }
+  ]
+  },
+  {
+  "name": "Docente",
+  "item": [
+    {
+    "name": "EnviarCodigo",
+    "request": {
+      "method": "POST",
+      "header": [],
+      "body": {
+      "mode": "raw",
+      "raw": "{\\r\\n  \\\"correo\\\": \\\"docente@example.com\\\"\\r\\n}\\r\\n",
+      "options": {
+        "raw": {
+        "language": "json"
+        }
+      }
+      },
+      "url": {
+      "raw": "http://localhost:80/api/docente/enviar-codigo",
+      "protocol": "http",
+      "host": [
+        "localhost"
+      ],
+      "port": "80",
+      "path": [
+        "api",
+        "docente",
+        "enviar-codigo"
+      ]
+      }
+    },
+    "response": []
+    }
+  ]
+  },
+  {
+  "name": "justificaciones",
+"item": [
+{
+"name": "crear",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+}
+]
+},
+{
+"name": "Eventos",
+"item": [
+{
+"name": "listar",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "finalizar",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "New Request",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "Crear evento",
+"request": {
+"auth": {
+"type": "bearer",
+"bearer": [
+{
+"key": "token",
+"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjMxZGE1NWRiN2EwMjUzNzQzMTNjMCIsInJvbCI6ImVzdHVkaWFudGUiLCJjb3JyZW8iOiJyaWNhcmRvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMzQ0OTAzLCJleHAiOjE3NTEzNTkzMDN9.Eh09O-c2w78m7EZ6WzrL7eb3LrhAXL4R-xNfWeqXv4I",
+"type": "string"
+}
+]
+},
+"method": "POST",
+"header": [],
+"body": {
+"mode": "raw",
+"raw": "{\r\n  \"_id\": \"685c95717f3b2c6e451ed2ba\",\r\n  \"titulo\": \"Proyecto de Móvil\",\r\n  \"ubicacion\": {\r\n    \"latitud\": -2.170998,\r\n    \"longitud\": -79.922359\r\n  },\r\n  \"fechaInicio\": \"2025-06-30T21:00:00.000Z\",\r\n  \"rangoPermitido\": 100\r\n}\r\n",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+},
+"url": {
+"raw": "http://localhost:80/api/eventos/crear",
+"protocol": "http",
+"host": [
+"localhost"
+],
+"port": "80",
+"path": [
+"api",
+"eventos",
+"crear"
+]
+}
+},
+"response": []
+},
+{
+"name": "GET EVENTOS",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+}
+]
+},
+{
+"name": "Asistencia",
+"item": [
+{
+"name": "REGISTRAR ASISTENCIA",
+"request": {
+"auth": {
+"type": "bearer",
+"bearer": [
+{
+"key": "token",
+"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjMxZGE1NWRiN2EwMjUzNzQzMTNjMCIsInJvbCI6ImVzdHVkaWFudGUiLCJjb3JyZW8iOiJyaWNhcmRvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMzM1NzAwLCJleHAiOjE3NTEzNTAxMDB9.KPuTmZOcBs1GxvF1dd28E9HUXNZcou7ueadR103aU-k",
+"type": "string"
+}
+]
+},
+"method": "POST",
+"header": [],
+"body": {
+"mode": "raw",
+"raw": "{\r\n  \"eventoId\": \"685c95717f3b2c6e451ed2ba\",\r\n  \"latitud\": -3.9856,\r\n  \"longitud\": -79.2041\r\n}\r\n",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+},
+"url": {
+"raw": "http://localhost:80/api/asistencia/registrar",
+"protocol": "http",
+"host": [
+"localhost"
+],
+"port": "80",
+"path": [
+"api",
+"asistencia",
+"registrar"
+]
+}
+},
+"response": []
+}
+]
+},
+{
+"name": "Dashboard",
+"item": [
+{
+"name": "DASHBOARD GET DATOS",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "Métricas por evento",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "Crear o actualizar una métrica",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+},
+{
+"name": "Datos estadísticos generales del dashboard",
+"request": {
+"method": "GET",
+"header": []
+},
+"response": []
+}
+]
+}
+]
+}
+

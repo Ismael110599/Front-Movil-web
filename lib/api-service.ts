@@ -30,6 +30,10 @@ export const apiService = {
     return httpClient.post<ApiResponse>(API_CONFIG.ENDPOINTS.REGISTER, userData)
   },
 
+  sendDocenteVerificationCode(correo: string): Promise<ApiResponse> {
+    return httpClient.post<ApiResponse>(API_CONFIG.ENDPOINTS.DOCENTE_SEND_CODE, { correo })
+  },
+
   verifyEmail(correo: string, codigo: string): Promise<ApiResponse> {
     return httpClient.post<ApiResponse>(API_CONFIG.ENDPOINTS.VERIFY_EMAIL, { correo, codigo })
   },
