@@ -42,8 +42,12 @@ export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDoce
 
     setIsVerifying(true)
     try {
-
-      setShowVerification(true)
+      const response = await apiService.sendDocenteVerificationCode(formData.email)
+      if (response.success) {
+        setShowVerification(true)
+      } else {
+        alert(response.message || "No se pudo enviar el código de verificación")
+      }
     } catch (error) {
       console.error("Error sending verification code:", error)
       alert("No se pudo enviar el código de verificación")
@@ -86,7 +90,7 @@ export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDoce
 
       if (response.success) {
         const newDocente: Docente = {
-          id: response.data?.id || Date.now().toString(),
+          id: (response.data as any)?.id || (response.data as any)?._id || Date.now().toString(),
           name: formData.name,
           email: formData.email,
           createdAt: new Date().toISOString().split("T")[0],
