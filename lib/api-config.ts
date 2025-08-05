@@ -20,7 +20,7 @@ export const API_CONFIG = {
     REGISTER_ATTENDANCE: "/api/asistencia/registrar",
 
     // Dashboard
-    DASHBOARD_DATA: "/api/dashboard/datos",
+    DASHBOARD_DATA: "/api/dashboard/overview",
 
     // Justificaciones
     CREATE_JUSTIFICATION: "/api/justificaciones/crear",
@@ -61,12 +61,31 @@ export interface EventoBackend {
 
 export interface DashboardData {
   totalEventos: number
+  cambioEventosMes: number | null
   eventosActivos: number
   totalAsistentes: number
-  promedioAsistencia: number
+  cambioAsistenciasSemana: number | null
+  promedioAsistenciaPorcentaje: number
+  eventosPorTipo: {
+    tipo: string
+    porcentaje: number
+  }[]
+  tendenciaAsistenciaMensual: {
+    mes: string
+    total: number
+  }[]
+  asistenciaPorDia: {
+    dia: string
+    total: number
+  }[]
+  asistenciaPorHora: {
+    hora: number
+    total: number
+  }[]
   actividadReciente: {
-    nombreEvento: string
-    cantidadAsistentes: number
-    timestamp: string
+    nombre: string
+    fechaInicio: string
+    fechaFin: string
+    createdAt: string
   }[]
 }

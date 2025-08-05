@@ -7,10 +7,7 @@ import type { AttendanceStats } from "@/types"
 export function useDashboardData() {
   const [stats, setStats] = useState<AttendanceStats>({
     totalEvents: 0,
-    activeEvents: 0,
-    totalAttendees: 0,
-    averageAttendance: 0,
-    recentActivity: [],
+
   })
   const [isConnected, setIsConnected] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -23,14 +20,6 @@ export function useDashboardData() {
       if (response.data) {
         setStats({
           totalEvents: response.data.totalEventos,
-          activeEvents: response.data.eventosActivos,
-          totalAttendees: response.data.totalAsistentes,
-          averageAttendance: response.data.promedioAsistencia,
-          recentActivity: response.data.actividadReciente.map((activity) => ({
-            eventName: activity.nombreEvento,
-            attendeeCount: activity.cantidadAsistentes,
-            timestamp: activity.timestamp,
-          })),
         })
         setIsConnected(true)
       }
@@ -40,10 +29,7 @@ export function useDashboardData() {
       // Mantener datos por defecto en caso de error
       setStats({
         totalEvents: 0,
-        activeEvents: 0,
-        totalAttendees: 0,
-        averageAttendance: 0,
-        recentActivity: [],
+
       })
     } finally {
       setIsLoading(false)
