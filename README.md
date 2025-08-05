@@ -38,9 +38,6 @@ below shows how each endpoint is used inside the application:
 | Endpoint | Function in `apiService` | Used in |
 | --- | --- | --- |
 | `/api/usuarios/login` | `login` | `contexts/auth-context.tsx` via `<LoginForm />` |
-| `/api/usuarios/registrar` | `register` | `components/create-docente-modal.tsx` → `<DocentesManagement />` |
-| `/api/docente/enviar-codigo` | `sendDocenteVerificationCode` | `components/create-docente-modal.tsx` → `<DocentesManagement />` |
-| `/api/usuarios/verificar-correo` | `verifyEmail` | `components/create-docente-modal.tsx` → `<DocentesManagement />` |
 | `/api/eventos/crear` | `createEvent` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/eventos/listar` | `getEvents` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/eventos/finalizar` | `finalizeEvent` | `hooks/use-events.ts` → `<EventsManagement />` |

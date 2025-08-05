@@ -7,9 +7,6 @@ export const API_CONFIG = {
     LOGIN: "/api/usuarios/login",
     VERIFY_EMAIL: "/api/usuarios/verificar-correo",
 
-    // Docentes
-    DOCENTE_SEND_CODE: "/api/docente/enviar-codigo",
-
     // Eventos
     CREATE_EVENT: "/api/eventos/crear",
     LIST_EVENTS: "/api/eventos/listar",

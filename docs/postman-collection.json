@@ -121,47 +121,6 @@
 ]
 }
 },
-  "response": []
-  }
-  ]
-  },
-  {
-  "name": "Docente",
-  "item": [
-    {
-    "name": "EnviarCodigo",
-    "request": {
-      "method": "POST",
-      "header": [],
-      "body": {
-      "mode": "raw",
-      "raw": "{\\r\\n  \\\"correo\\\": \\\"docente@example.com\\\"\\r\\n}\\r\\n",
-      "options": {
-        "raw": {
-        "language": "json"
-        }
-      }
-      },
-      "url": {
-      "raw": "http://localhost:80/api/docente/enviar-codigo",
-      "protocol": "http",
-      "host": [
-        "localhost"
-      ],
-      "port": "80",
-      "path": [
-        "api",
-        "docente",
-        "enviar-codigo"
-      ]
-      }
-    },
-    "response": []
-    }
-  ]
-  },
-  {
-  "name": "justificaciones",
 "item": [
 {
 "name": "crear",
