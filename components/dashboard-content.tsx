@@ -42,7 +42,11 @@ export function DashboardContent() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalEvents}</div>
-            <p className="text-xs text-muted-foreground">+2 desde el mes pasado</p>
+            <p className="text-xs text-muted-foreground">
+              {typeof stats.monthlyEventChange === "number"
+                ? `${stats.monthlyEventChange > 0 ? "+" : ""}${stats.monthlyEventChange.toFixed(2)}% desde el mes pasado`
+                : "Sin datos previos"}
+            </p>
           </CardContent>
         </Card>
 
@@ -64,7 +68,11 @@ export function DashboardContent() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalAttendees.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">+12% desde la semana pasada</p>
+            <p className="text-xs text-muted-foreground">
+              {typeof stats.weeklyAttendanceChange === "number"
+                ? `${stats.weeklyAttendanceChange > 0 ? "+" : ""}${stats.weeklyAttendanceChange.toFixed(2)}% desde la semana pasada`
+                : "Sin datos previos"}
+            </p>
           </CardContent>
         </Card>
 
@@ -74,8 +82,8 @@ export function DashboardContent() {
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.averageAttendance}%</div>
-            <p className="text-xs text-muted-foreground">+5% desde el mes pasado</p>
+            <div className="text-2xl font-bold">{stats.averageAttendance.toFixed(2)}%</div>
+            <p className="text-xs text-muted-foreground">Promedio global</p>
           </CardContent>
         </Card>
       </div>
@@ -94,7 +102,7 @@ export function DashboardContent() {
                   <div className="flex-1">
                     <p className="text-sm font-medium">{activity.eventName}</p>
                     <p className="text-xs text-muted-foreground">
-                      {activity.attendeeCount} asistentes • {new Date(activity.timestamp).toLocaleTimeString()}
+                      {new Date(activity.timestamp).toLocaleString()}
                     </p>
                   </div>
                 </div>
@@ -110,29 +118,24 @@ export function DashboardContent() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Conferencias</span>
-                <span className="text-sm font-medium">45%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: "45%" }}></div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Seminarios</span>
-                <span className="text-sm font-medium">35%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-green-600 h-2 rounded-full" style={{ width: "35%" }}></div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Clases</span>
-                <span className="text-sm font-medium">20%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-yellow-600 h-2 rounded-full" style={{ width: "20%" }}></div>
-              </div>
+              {stats.eventsByType.map((item, index) => {
+                const colors = ["bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600"]
+                const color = colors[index % colors.length]
+                return (
+                  <div key={index}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">{item.type}</span>
+                      <span className="text-sm font-medium">{item.percentage.toFixed(0)}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className={`${color} h-2 rounded-full`}
+                        style={{ width: `${item.percentage}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </CardContent>
         </Card>

@@ -41,12 +41,17 @@ export interface Event {
 
 export interface AttendanceStats {
   totalEvents: number
+  monthlyEventChange: number | null
   activeEvents: number
   totalAttendees: number
+  weeklyAttendanceChange: number | null
   averageAttendance: number
   recentActivity: {
     eventName: string
-    attendeeCount: number
     timestamp: string
+  }[]
+  eventsByType: {
+    type: string
+    percentage: number
   }[]
 }
