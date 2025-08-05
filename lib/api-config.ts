@@ -6,6 +6,7 @@ export const API_CONFIG = {
     REGISTER: "/api/usuarios/registrar",
     LOGIN: "/api/usuarios/login",
     VERIFY_EMAIL: "/api/usuarios/verificar-correo",
+    DOCENTE_SEND_CODE: "/api/usuarios/enviar-codigo",
 
     // Eventos
     CREATE_EVENT: "/api/eventos/crear",
