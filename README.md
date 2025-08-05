@@ -38,8 +38,6 @@ below shows how each endpoint is used inside the application:
 | Endpoint | Function in `apiService` | Used in |
 | --- | --- | --- |
 | `/api/usuarios/login` | `login` | `contexts/auth-context.tsx` via `<LoginForm />` |
-| `/api/usuarios/registrar` | `register` | _Registration flow (to be implemented)_ |
-| `/api/usuarios/verificar-correo` | `verifyEmail` | _Email verification (to be implemented)_ |
 | `/api/eventos/crear` | `createEvent` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/eventos/listar` | `getEvents` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/eventos/finalizar` | `finalizeEvent` | `hooks/use-events.ts` → `<EventsManagement />` |

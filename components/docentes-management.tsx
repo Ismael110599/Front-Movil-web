@@ -78,17 +78,8 @@ export function DocentesManagement() {
       docente.email.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const handleCreateSuccess = () => {
-    // Simular adición de nuevo docente
-    const newDocente: Docente = {
-      id: Date.now().toString(),
-      name: "Nuevo Docente",
-      email: "nuevo@universidad.edu",
-      createdAt: new Date().toISOString().split("T")[0],
-      verified: true,
-      eventsAssigned: 0,
-    }
-    setDocentes((prev) => [...prev, newDocente])
+  const handleCreateSuccess = (docente: Docente) => {
+    setDocentes((prev) => [...prev, docente])
   }
 
   const handleExportDocentes = () => {
