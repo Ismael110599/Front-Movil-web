@@ -3,9 +3,12 @@ export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:80",
   ENDPOINTS: {
     // Usuarios
-    REGISTER: "/usuarios/registrar",
-    LOGIN: "/usuarios/login",
-    VERIFY_EMAIL: "/usuarios/verificar-correo",
+    REGISTER: "/api/usuarios/registrar",
+    LOGIN: "/api/usuarios/login",
+    VERIFY_EMAIL: "/api/usuarios/verificar-correo",
+
+    // Docentes
+    DOCENTE_SEND_CODE: "/api/docente/enviar-codigo",
 
     // Eventos
     CREATE_EVENT: "/api/eventos/crear",

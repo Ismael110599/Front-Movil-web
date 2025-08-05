@@ -16,11 +16,13 @@ import {
 } from "@/components/ui/dialog"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Mail, Check } from "lucide-react"
+import { apiService } from "@/lib/api-service"
+import type { Docente } from "@/types"
 
 interface CreateDocenteModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  onSuccess: () => void
+  onSuccess: (docente: Docente) => void
 }
 
 export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDocenteModalProps) {
@@ -39,25 +41,33 @@ export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDoce
     if (!formData.email) return
 
     setIsVerifying(true)
-    // Simular envío de código
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsVerifying(false)
-    setShowVerification(true)
+    try {
+      await apiService.sendDocenteVerificationCode(formData.email)
+      setShowVerification(true)
+    } catch (error) {
+      console.error("Error sending verification code:", error)
+      alert("No se pudo enviar el código de verificación")
+    } finally {
+      setIsVerifying(false)
+    }
   }
 
   const handleVerifyCode = async () => {
     if (!verificationCode) return
 
     setIsLoading(true)
-    // Simular verificación
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    if (verificationCode === "123456") {
-      setIsVerified(true)
+    try {
+      const response = await apiService.verifyEmail(formData.email, verificationCode)
+      if (response.success) {
+        setIsVerified(true)
+      } else {
+        alert(response.message || "Código incorrecto")
+      }
+    } catch (error) {
+      console.error("Error verifying code:", error)
+      alert("Error al verificar el código")
+    } finally {
       setIsLoading(false)
-    } else {
-      setIsLoading(false)
-      alert("Código incorrecto. Use 123456 para la demo.")
     }
   }
 
@@ -66,18 +76,40 @@ export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDoce
     if (!isVerified) return
 
     setIsLoading(true)
-    // Simular creación
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const response = await apiService.register({
+        nombre: formData.name,
+        correo: formData.email,
+        contrasena: formData.password,
+        rol: "docente",
+      })
 
-    setIsLoading(false)
-    onSuccess()
-    onOpenChange(false)
+      if (response.success) {
+        const newDocente: Docente = {
+          id: response.data?.id || Date.now().toString(),
+          name: formData.name,
+          email: formData.email,
+          createdAt: new Date().toISOString().split("T")[0],
+          verified: true,
+          eventsAssigned: 0,
+        }
+        onSuccess(newDocente)
+        onOpenChange(false)
 
-    // Reset form
-    setFormData({ name: "", email: "", password: "" })
-    setVerificationCode("")
-    setIsVerified(false)
-    setShowVerification(false)
+        // Reset form
+        setFormData({ name: "", email: "", password: "" })
+        setVerificationCode("")
+        setIsVerified(false)
+        setShowVerification(false)
+      } else {
+        alert(response.message || "No se pudo crear el docente")
+      }
+    } catch (error) {
+      console.error("Error creating docente:", error)
+      alert("Error al crear el docente")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -140,11 +172,6 @@ export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDoce
                   Verificar
                 </Button>
               </div>
-              <Alert>
-                <AlertDescription>
-                  Para la demo, use el código: <strong>123456</strong>
-                </AlertDescription>
-              </Alert>
             </div>
           )}
 
