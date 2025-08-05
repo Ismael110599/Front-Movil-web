@@ -42,7 +42,7 @@ export function CreateDocenteModal({ open, onOpenChange, onSuccess }: CreateDoce
 
     setIsVerifying(true)
     try {
-      await apiService.verifyEmail(formData.email, "")
+
       setShowVerification(true)
     } catch (error) {
       console.error("Error sending verification code:", error)
