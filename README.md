@@ -28,3 +28,24 @@ Continue building your app on:
 2. Deploy your chats from the v0 interface
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
+
+## API Endpoints
+
+The project consumes a REST API whose endpoints are documented in
+[`docs/postman-collection.json`](docs/postman-collection.json). The table
+below shows how each endpoint is used inside the application:
+
+| Endpoint | Function in `apiService` | Used in |
+| --- | --- | --- |
+| `/api/usuarios/login` | `login` | `contexts/auth-context.tsx` via `<LoginForm />` |
+| `/api/usuarios/registrar` | `register` | _Registration flow (to be implemented)_ |
+| `/api/usuarios/verificar-correo` | `verifyEmail` | _Email verification (to be implemented)_ |
+| `/api/eventos/crear` | `createEvent` | `hooks/use-events.ts` → `<EventsManagement />` |
+| `/api/eventos/listar` | `getEvents` | `hooks/use-events.ts` → `<EventsManagement />` |
+| `/api/eventos/finalizar` | `finalizeEvent` | `hooks/use-events.ts` → `<EventsManagement />` |
+| `/api/asistencia/registrar` | `registerAttendance` | _Attendance registration (future pages)_ |
+| `/api/dashboard/datos` | `getDashboardData` | `hooks/use-websocket.ts` → `<EnhancedDashboard />` |
+| `/api/justificaciones/crear` | `createJustification` | _Justification creation (future pages)_ |
+
+These mappings make it easier to locate where each API call is triggered in
+the user interface.
