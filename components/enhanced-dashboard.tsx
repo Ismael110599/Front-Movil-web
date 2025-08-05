@@ -1,6 +1,6 @@
 "use client"
 
-import { useWebSocket } from "@/hooks/use-websocket"
+import { useDashboardData } from "@/hooks/use-dashboard-data"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -19,7 +19,7 @@ import {
 } from "lucide-react"
 
 export function EnhancedDashboard() {
-  const { stats, isConnected, isLoading, refetch } = useWebSocket()
+  const { stats, isConnected, isLoading, refetch } = useDashboardData()
 
   const handleExportPDF = () => {
     // Simular exportación PDF
