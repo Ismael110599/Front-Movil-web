@@ -34,10 +34,13 @@ export function DashboardHeader() {
             <Avatar className="h-8 w-8">
               <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
               <AvatarFallback>
-                {user.name
+                {user?.name
+                  ? user.name
                   .split(" ")
                   .map((n) => n[0])
-                  .join("")}
+                  .join("")
+                  : "?"
+                }
               </AvatarFallback>
             </Avatar>
           </Button>

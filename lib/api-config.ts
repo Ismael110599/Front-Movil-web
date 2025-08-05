@@ -9,7 +9,7 @@ export const API_CONFIG = {
     DOCENTE_SEND_CODE: "/api/usuarios/enviar-codigo",
 
     // Docentes
-    LIST_DOCENTES: "/api/docentes/listar",
+    LIST_DOCENTES: "/api/usuarios/docentes",
 
     // Eventos
     CREATE_EVENT: "/api/eventos/crear",
@@ -20,7 +20,7 @@ export const API_CONFIG = {
     REGISTER_ATTENDANCE: "/api/asistencia/registrar",
 
     // Dashboard
-    DASHBOARD_DATA: "/api/dashboard/datos",
+    DASHBOARD_DATA: "/api/dashboard/overview",
 
     // Justificaciones
     CREATE_JUSTIFICATION: "/api/justificaciones/crear",

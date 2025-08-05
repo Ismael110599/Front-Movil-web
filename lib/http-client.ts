@@ -40,7 +40,8 @@ class HttpClient {
     const data = await response.json().catch(() => ({}))
 
     if (!response.ok) {
-      throw new Error(data.message || response.statusText)
+      const errorMessage = data?.message || `Error ${response.status}: ${response.statusText}`;
+      throw new Error(errorMessage);
     }
 
     return data as T
