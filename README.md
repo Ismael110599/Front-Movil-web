@@ -52,7 +52,6 @@ below shows how each endpoint is used inside the application:
 | `/api/eventos/listar` | `getEvents` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/eventos/finalizar` | `finalizeEvent` | `hooks/use-events.ts` → `<EventsManagement />` |
 | `/api/asistencia/registrar` | `registerAttendance` | _Attendance registration (future pages)_ |
-| `/api/dashboard/overview` | `getDashboardData` | `hooks/use-dashboard-data.ts` → `<EnhancedDashboard />` |
 | `/api/justificaciones/crear` | `createJustification` | _Justification creation (future pages)_ |
 
 These mappings make it easier to locate where each API call is triggered in
