@@ -53,7 +53,7 @@ export interface AttendanceStats {
     timestamp: string
   }[]
   eventsByType: {
-    type: string
+    type: string | null
     percentage: number
   }[]
   monthlyAttendanceTrend: {
