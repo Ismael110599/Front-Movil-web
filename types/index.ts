@@ -48,13 +48,25 @@ export interface AttendanceStats {
   averageAttendance: number
   recentActivity: {
     eventName: string
+    eventStart: string
+    eventEnd: string
     timestamp: string
   }[]
   eventsByType: {
     type: string
     percentage: number
   }[]
-  monthlyAttendanceTrend: { month: string; total: number }[] // tendencia mensual de asistencia
-  attendanceByDay: { day: string; total: number }[] // asistencia total por día
-  attendanceByHour: { hour: number; total: number }[] // asistencia total por hora del día
+  monthlyAttendanceTrend: {
+    month: string
+    total: number
+  }[]
+  attendanceByDay: {
+    day: string
+    total: number
+  }[]
+  attendanceByHour: {
+    hour: number
+    total: number
+  }[]
+
 }
