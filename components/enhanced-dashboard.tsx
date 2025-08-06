@@ -140,7 +140,7 @@ export function EnhancedDashboard() {
                     <div className="flex-1">
                       <p className="text-sm font-medium">{activity.eventName}</p>
                       <p className="text-xs text-muted-foreground">
-                        {activity.attendeeCount} asistentes • {new Date(activity.timestamp).toLocaleTimeString()}
+                        {new Date(activity.timestamp).toLocaleTimeString()}
                       </p>
                     </div>
                   </div>
