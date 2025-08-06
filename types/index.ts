@@ -54,4 +54,7 @@ export interface AttendanceStats {
     type: string
     percentage: number
   }[]
+  monthlyAttendanceTrend: { month: string; total: number }[] // tendencia mensual de asistencia
+  attendanceByDay: { day: string; total: number }[] // asistencia total por día
+  attendanceByHour: { hour: number; total: number }[] // asistencia total por hora del día
 }
