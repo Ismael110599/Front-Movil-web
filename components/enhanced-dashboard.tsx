@@ -43,6 +43,19 @@ export function EnhancedDashboard() {
     )
   }
 
+  const maxMonthlyAttendance = Math.max(
+    ...stats.monthlyAttendanceTrend.map((item) => item.total),
+    0
+  )
+  const maxAttendanceByDay = Math.max(
+    ...stats.attendanceByDay.map((item) => item.total),
+    0
+  )
+  const maxAttendanceByHour = Math.max(
+    ...stats.attendanceByHour.map((item) => item.total),
+    0
+  )
+
   return (
     <div className="flex-1 space-y-4 p-4 md:p-6">
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -81,6 +94,11 @@ export function EnhancedDashboard() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalEvents}</div>
             <p className="text-xs text-muted-foreground">Eventos registrados</p>
+            <p className="text-xs text-muted-foreground">
+              {typeof stats.monthlyEventChange === "number"
+                ? `${stats.monthlyEventChange > 0 ? "+" : ""}${stats.monthlyEventChange.toFixed(2)}% desde el mes pasado`
+                : "Sin datos previos"}
+            </p>
           </CardContent>
         </Card>
 
@@ -103,6 +121,11 @@ export function EnhancedDashboard() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalAttendees.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground">Asistencias registradas</p>
+            <p className="text-xs text-muted-foreground">
+              {typeof stats.weeklyAttendanceChange === "number"
+                ? `${stats.weeklyAttendanceChange > 0 ? "+" : ""}${stats.weeklyAttendanceChange.toFixed(2)}% desde la semana pasada`
+                : "Sin datos previos"}
+            </p>
           </CardContent>
         </Card>
 
@@ -189,6 +212,156 @@ export function EnhancedDashboard() {
                 </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Eventos por Tipo</CardTitle>
+            <CardDescription>Distribución de eventos por categoría</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {stats.eventsByType.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Sin datos</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.eventsByType.map((item, index) => {
+                  const colors = [
+                    "bg-blue-600",
+                    "bg-green-600",
+                    "bg-yellow-600",
+                    "bg-purple-600",
+                  ]
+                  const color = colors[index % colors.length]
+                  return (
+                    <div key={index}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">{item.type || "Sin tipo"}</span>
+                        <span className="text-sm font-medium">{item.percentage.toFixed(0)}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`${color} h-2 rounded-full`}
+                          style={{ width: `${item.percentage}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Tendencia Mensual de Asistencia</CardTitle>
+            <CardDescription>Totales de asistencia por mes</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {stats.monthlyAttendanceTrend.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Sin datos</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.monthlyAttendanceTrend.map((item, index) => (
+                  <div key={index}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">
+                        {new Date(item.month + "-01").toLocaleDateString("es", {
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <span className="text-sm font-medium">{item.total}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-blue-600 h-2 rounded-full"
+                        style={{
+                          width: `${
+                            maxMonthlyAttendance > 0
+                              ? (item.total / maxMonthlyAttendance) * 100
+                              : 0
+                          }%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Asistencia por Día</CardTitle>
+            <CardDescription>Totales por día de la semana</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {stats.attendanceByDay.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Sin datos</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.attendanceByDay.map((item, index) => (
+                  <div key={index}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm capitalize">{item.day}</span>
+                      <span className="text-sm font-medium">{item.total}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-green-600 h-2 rounded-full"
+                        style={{
+                          width: `${
+                            maxAttendanceByDay > 0
+                              ? (item.total / maxAttendanceByDay) * 100
+                              : 0
+                          }%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Asistencia por Hora</CardTitle>
+            <CardDescription>Distribución de asistencias por hora</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {stats.attendanceByHour.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Sin datos</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.attendanceByHour.map((item, index) => (
+                  <div key={index}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">{`${item.hour}:00`}</span>
+                      <span className="text-sm font-medium">{item.total}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-purple-600 h-2 rounded-full"
+                        style={{
+                          width: `${
+                            maxAttendanceByHour > 0
+                              ? (item.total / maxAttendanceByHour) * 100
+                              : 0
+                          }%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
