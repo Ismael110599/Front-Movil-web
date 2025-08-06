@@ -14,6 +14,9 @@ export function useDashboardData() {
     averageAttendance: 0,
     recentActivity: [],
     eventsByType: [],
+    monthlyAttendanceTrend: [],
+    attendanceByDay: [],
+    attendanceByHour: [],
   }
   const [stats, setStats] = useState<AttendanceStats>(initialStats)
   const [isConnected, setIsConnected] = useState(false)
@@ -35,11 +38,27 @@ export function useDashboardData() {
           averageAttendance: data.promedioAsistenciaPorcentaje ?? 0,
           recentActivity: (data.actividadReciente ?? []).map((item) => ({
             eventName: item.nombre,
+            eventStart: item.fechaInicio,
+            eventEnd: item.fechaFin,
             timestamp: item.createdAt,
           })),
           eventsByType: (data.eventosPorTipo ?? []).map((item) => ({
             type: item.tipo,
             percentage: item.porcentaje,
+          })),
+          monthlyAttendanceTrend: (data.tendenciaAsistenciaMensual ?? []).map(
+            (item) => ({
+              month: item.mes,
+              total: item.total,
+            })
+          ),
+          attendanceByDay: (data.asistenciaPorDia ?? []).map((item) => ({
+            day: item.dia,
+            total: item.total,
+          })),
+          attendanceByHour: (data.asistenciaPorHora ?? []).map((item) => ({
+            hour: item.hora,
+            total: item.total,
           })),
         })
         setIsConnected(true)
